@@ -1,1 +1,6 @@
 **/.xcodeproj
+*.pbxproj
+*.xcworkspacedata
+*.xcuserstate
+*.xcscheme
+*.plist
