@@ -2,81 +2,58 @@
 //  main.cpp
 //  offer-31
 //
-//  Created by 何昊 on 2017/10/10.
+//  Created by 何昊 on 2017/10/20.
 //  Copyright © 2017年 何昊. All rights reserved.
 //
-//  整数中1出现的次数（从1到n整数中1出现的次数）
+//  把数组排成最小的数
 //
 
-/**
- * 解法二
- * 十位(0-9)上1的个数是1
- * 百位(10-99)上1的个数是10
- * 千位(100-999)上1的个数是100
- * 以此类推
- *
- * x / 10为不考虑最后一位的1的个数
- *
- * 考虑余数(最后一位的情况)
- *  1.如果余数大于1则在基础上+1
- *  2.如果余数等于1则n - current/10 + 1,因为当前位前的每一位变化都会影响1的个数
- */
-
 #include <iostream>
+#include <vector>
+#include <string>
+#include <sstream>
+
+/**
+ * 在字典中，单词是按照首字母在字母表中的顺序进行排列的，比如 alpha 在 beta 之前。而第一个字母相同时，会去比较两个单词的第二个字母在字母表中的顺序，比如 account 在 advanced 之前，以此类推。
+ * 下列单词就是按照字典序进行排列的
+ * as
+ * aster
+ * astro
+ * 从大到小
+ */
 
 using namespace std;
 
 class Solution {
 public:
-    int NumberOf1Between1AndN_Solution(int n) {
-        if(n <= 0) return 0;
-
-        int sum = 0;
-        int number = 0;
-
-        while(number <= n){
-            int temp = number;
-            while(temp > 0){
-                if(temp % 10 == 1){
-                    sum++;
-                }
-                temp /= 10;
-            }
-            number++;
+    string PrintMinNumber(vector<int> numbers) {
+        vector<string> stringifyNumbers;
+        stringstream stream;
+        string result;
+        for(int i = 0; i < numbers.size(); i++) {
+            stream.clear();
+            stream << numbers[i];
+            stream >> stringifyNumbers[i];
         }
-        return sum;
+        sort(stringifyNumbers.begin(), stringifyNumbers.end(), strCompare);
+        for(int i = 0; i < stringifyNumbers.size(); i++) {
+            result += stringifyNumbers[i];
+        }
+        return result;
     }
 
-    // 解法二
-    int NumberOf1Between1AndN_Solution1(int n) {
-        if(n <= 0) return 0;
-
-        int sum = 0;
-        int mult = 1;
-        int current = n;
-
-        while(current > 0){
-            int quotient = current / 10;
-            int remainder = current % 10;
-            sum += quotient * mult;
-            if(remainder > 1){
-                sum += mult;
-            }
-
-            if(remainder == 1){
-                sum += n - current * mult + 1;
-            }
-
-            mult *= 10;
-            current /= 10;
-        }
-
-        return sum;
+    static bool strCompare(string str, string otherStr) {
+        string tempStr = str;
+        str = str + otherStr;
+        otherStr = tempStr + otherStr;
+        return str.compare(otherStr) < 0;
     }
 };
 
 int main(int argc, const char * argv[]) {
     Solution *p = new Solution();
-    cout << p->NumberOf1Between1AndN_Solution(1000) <<'\n';
+    int temp[3] = {3, 32, 321};
+    vector<int> arr(temp, temp + 3);
+    cout << p->PrintMinNumber(arr) << '\n';
     return 0;
 }
