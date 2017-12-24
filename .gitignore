@@ -4,3 +4,6 @@
 *.xcuserstate
 *.xcscheme
 *.plist
+*.xcodeproj
+*.settings.json
+*.json
