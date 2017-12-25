@@ -11,11 +11,11 @@
 using namespace std;
 
 struct TreeNode {
-   int val;
-   struct TreeNode *left;
-   struct TreeNode *right;
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
 };
- 
+
 class Solution {
 public:
     void Mirror(TreeNode *pRoot) {
@@ -45,3 +45,4 @@ int main(int argc, const char * argv[]) {
     cout << root.right->val << '\n';
     return 0;
 }
+
