@@ -32,8 +32,8 @@ public:
         if(matrix.size() <= 0) return matrix[0];
         vector<int> result;
         map<char, int> a, b, c, d;
-        int col = matrix.size() - 1;
-        int row = matrix[0].size() - 1;
+        unsigned int col = matrix.size() - 1;
+        unsigned int row = matrix[0].size() - 1;
         
         a['x'] = a['y'] = b['y'] = c['x'] = 0;
         d['x'] = b['x'] = row;
@@ -76,6 +76,47 @@ public:
         }
         return temp;
     }
+    
+    /**
+     * 解法二
+     */
+    vector<int> printMatrix2(vector<vector<int> > matrix) {
+        int row = matrix.size();
+        int col = matrix[0].size();
+        vector<int> resultList;
+        if (row == 0 || col == 0) return resultList;
+        
+        int left, right, top, bottom;
+        top = left = 0;
+        right = col - 1;
+        bottom = row - 1;
+        
+        while(left <= right && top <= bottom) {
+            for (int i = left; i <= right; i++) {
+                resultList.push_back(matrix[top][i]);
+            }
+            
+            for (int i = top + 1; i <= bottom; i++) {
+                resultList.push_back(matrix[i][right]);
+            }
+            
+            for (int i = right - 1; i >= left && top < bottom; i--) {
+                resultList.push_back(matrix[bottom][i]);
+            }
+            
+            for (int i = bottom - 1; i > top && left < right; i--) {
+                resultList.push_back(matrix[i][left]);
+            }
+            
+            ++top;
+            ++left;
+            --bottom;
+            --right;
+        }
+        
+        return resultList;
+    }
+    
 };
 
 int main(int argc, const char * argv[]) {
@@ -94,7 +135,7 @@ int main(int argc, const char * argv[]) {
     }
     
     Solution *p = new Solution();
-    n = p->printMatrix(matrix);
+    n = p->printMatrix2(matrix);
     
     for (int i = 0; i < n.size(); i++) {
         cout << n[i] << ' ';
@@ -102,3 +143,4 @@ int main(int argc, const char * argv[]) {
     cout << '\n';
     return 0;
 }
+
